@@ -17,5 +17,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Long deleteById(long id);
 
     Optional<User> getReferenceById(long id);
-    // User getReferenceById(long id) throws Exception;
 }

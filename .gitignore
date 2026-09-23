@@ -1,3 +1,8 @@
 run.sh
 tmp.kpz
 *.kpz
+/junk
+
+
+
+.env

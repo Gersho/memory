@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+
+  # React Frontend
+  memory_front:
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_API_URL=https://memory.zennoune.fr/api
+    container_name: memory_front
+    depends_on:
+      - memory_back
+    restart: always
+    networks:
+      - memory_network
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+      # Frontend Router
+      - "traefik.http.routers.memory-front.rule=Host(`memory.zennoune.fr`)"
+      - "traefik.http.routers.memory-front.entrypoints=websecure"
+      - "traefik.http.routers.memory-front.tls.certresolver=letsencrypt"
+      - "traefik.http.services.memory-front.loadbalancer.server.port=80"
+
+
+  # Java Spring Boot Backend
+  memory_back:
+    build:
+      context: ./backend
+    container_name: memory_back
+    restart: always
+    networks:
+      - memory_network
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+      # Backend Router & API Path Matching
+      - "traefik.http.routers.memory-back.rule=Host(`memory.zennoune.fr`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.memory-back.entrypoints=websecure"
+      - "traefik.http.routers.memory-back.tls.certresolver=letsencrypt"
+      # Spring Boot default internal port 8080
+      - "traefik.http.services.memory-back.loadbalancer.server.port=8080"
+
+
+networks:
+  memory_network:
+    name: memory_network
+    driver: bridge
+  traefik-network:
+    external: true
