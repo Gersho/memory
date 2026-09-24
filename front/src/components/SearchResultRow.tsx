@@ -1,7 +1,7 @@
 function SearchResultRow(props: any) {
 
     function handleClickDelete() {
-        fetch("http://process.env.REACT_APP_API_URL/admin/delete?id=" + props.id, {
+        fetch("http://" + process.env.REACT_APP_API_URL + "/admin/delete?id=" + props.id, {
             method: "DELETE",
             headers: {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")

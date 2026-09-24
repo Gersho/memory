@@ -8,7 +8,7 @@ function LoginForm() {
     function handleSubmit(event: any) {
         event.preventDefault();
         setError(null);
-        fetch("http://process.env.REACT_APP_API_URL/auth/login", {
+        fetch("http://" + process.env.REACT_APP_API_URL + "/auth/login", {
             method: "POST",
             body: JSON.stringify({
                 login: event.target[1].value,
