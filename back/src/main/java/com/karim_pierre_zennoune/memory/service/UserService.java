@@ -37,18 +37,27 @@ public class UserService {
         UserAuthDto userDto = new UserAuthDto("superadmin", "123456");
 
         Optional<Role> optionalRole = roleService.findByName(RoleEnum.SUPER_ADMIN);
-        User optionalUser = userRepository.findByLogin(userDto.login()).orElseThrow(() -> new UserNotFoundException());
+        // User optionalUser =
+        // userRepository.findByLogin(userDto.login()).orElseThrow(() -> new
+        // UserNotFoundException());
 
-        if (optionalRole.isEmpty() || optionalUser != null) {
-            return;
-        }
+        // if (optionalRole.isEmpty() || optionalUser != null) {
+        // return;
+        // }
 
-        var user = new User();
-        user.setLogin(userDto.login());
-        user.setPassword(passwordEncoder.encode(userDto.password()));
-        user.setRole(optionalRole.get());
+        // User optionalUser =
+        userRepository.findByLogin(userDto.login()).ifPresentOrElse(
+                user -> System.out.println("Default user already exists"),
+                () -> {
+                    var user = new User();
+                    user.setLogin(userDto.login());
+                    user.setPassword(passwordEncoder.encode(userDto.password()));
+                    user.setRole(optionalRole.get());
 
-        userRepository.save(user);
+                    userRepository.save(user);
+                    System.out.println("superadmin user created");
+                });
+
     }
 
     // public User registerUser(UserAuthDto user) {

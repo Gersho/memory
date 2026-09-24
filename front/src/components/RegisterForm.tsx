@@ -40,8 +40,6 @@ function RegisterForm() {
 
 
                 (err) => {
-
-                    console.log("caca");
                     setError(err.message);
                 })
     }
