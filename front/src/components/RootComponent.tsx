@@ -13,7 +13,7 @@ function RootComponent() {
     }
 
     function searchUsers() {
-        fetch("http://" + process.env.REACT_APP_API_URL + "/admin/search?param=" + searchTerm, {
+        fetch("" + process.env.REACT_APP_API_URL + "/admin/search?param=" + searchTerm, {
             method: "GET",
             headers: {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")

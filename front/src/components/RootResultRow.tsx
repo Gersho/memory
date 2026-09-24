@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 function RootResultRow(props: any) {
 
     function handleClickDelete() {
-        fetch("http://" + process.env.REACT_APP_API_URL + "/admin/delete?id=" + props.id, {
+        fetch("" + process.env.REACT_APP_API_URL + "/admin/delete?id=" + props.id, {
             method: "DELETE",
             headers: {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")
@@ -26,7 +26,7 @@ function RootResultRow(props: any) {
 
     function handleClickPromote() {
         let action = props.role === 'ADMIN' ? "promote-admin" : "promote-user";
-        fetch("http://" + process.env.REACT_APP_API_URL + "/root/" + action, {
+        fetch("" + process.env.REACT_APP_API_URL + "/root/" + action, {
             method: "POST",
             body: JSON.stringify({
                 id: props.id,
@@ -59,7 +59,7 @@ function RootResultRow(props: any) {
 
 
         let action = props.role === 'ADMIN' ? "demote-admin" : "demote-root";
-        fetch("http://" + process.env.REACT_APP_API_URL + "/root/" + action, {
+        fetch("" + process.env.REACT_APP_API_URL + "/root/" + action, {
             method: "POST",
             body: JSON.stringify({
                 id: props.id
