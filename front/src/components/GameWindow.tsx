@@ -42,7 +42,7 @@ function GameWindow(props: GameWindowProps) {
         date: new Date()
       }
       //todo post score
-      fetch("http://localhost:8080/addscore", {
+      fetch("http://process.env.REACT_APP_API_URL/addscore", {
         method: "POST",
         body: JSON.stringify(scoreDto),
         headers: {

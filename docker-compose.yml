@@ -1,6 +1,25 @@
-version: '3.8'
-
 services:
+
+  # MySQL Database
+  memory_db:
+    image: mysql:8.0
+    container_name: memory_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: memory_db
+      MYSQL_USER: sqluser
+      MYSQL_PASSWORD: "123456"
+    volumes:
+      - mysql-data-memory:/var/lib/mysql
+    networks:
+      - memory_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 
   # React Frontend
   memory_front:
@@ -31,6 +50,9 @@ services:
       context: ./backend
     container_name: memory_back
     restart: always
+    depends_on:
+      memory_db:
+        condition: service_healthy
     networks:
       - memory_network
       - traefik-network
@@ -43,6 +65,10 @@ services:
       - "traefik.http.routers.memory-back.tls.certresolver=letsencrypt"
       # Spring Boot default internal port 8080
       - "traefik.http.services.memory-back.loadbalancer.server.port=8080"
+
+
+volumes:
+  mysql-data-memory:
 
 
 networks:

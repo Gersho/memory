@@ -18,7 +18,7 @@ function LeaderBoard() {
     useEffect(() => {
         setIsLoading(true); //indique que la requête démarre
         setError(null); // efface les anciennes erreurs
-        fetch("http://localhost:8080/leaderboard")
+        fetch("http://process.env.REACT_APP_API_URL/leaderboard")
             .then((res) => {
                 if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`); //vérifie la réponse
                 return res.json(); // transforme le JSON en objet JavaScript si réponse ok
@@ -28,7 +28,7 @@ function LeaderBoard() {
             .finally(() => setIsLoading(false)); // se déclenche quoi qu’il arrive
 
         if (sessionStorage.getItem("id")) {
-            fetch("http://localhost:8080/userscores?id=" + sessionStorage.getItem("id"), {
+            fetch("http://process.env.REACT_APP_API_URL/userscores?id=" + sessionStorage.getItem("id"), {
                 method: "GET",
                 headers: {
                     "Authorization": 'Bearer ' + sessionStorage.getItem("token")

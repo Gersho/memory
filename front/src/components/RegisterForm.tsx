@@ -12,7 +12,7 @@ function RegisterForm() {
             setError("Password don't match");
             return;
         }
-        fetch("http://localhost:8080/auth/signup", {
+        fetch("http://process.env.REACT_APP_API_URL/auth/signup", {
             method: "POST",
             body: JSON.stringify({
                 login: event.target[1].value,

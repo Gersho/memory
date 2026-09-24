@@ -15,7 +15,7 @@ function AdminComponent() {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/admin/search?param=" + searchTerm, {
+        fetch("http://process.env.REACT_APP_API_URL/admin/search?param=" + searchTerm, {
             method: "GET",
             headers: {
                 "Authorization": 'Bearer ' + sessionStorage.getItem("token")
